@@ -1,36 +1,80 @@
-# Cookie Clicker Game (Apache NetBeans)
+🍪 Cookie Clicker Game (Apache NetBeans)
+Welcome to Cookie Clicker — a simple, addictive, and fully custom Java-based incremental game built using Apache NetBeans!
+Click the cookie, earn points, unlock upgrades, gain passive income, and prestige to multiply your gains.
+Perfect for learning Java GUI development, event handling, timers, and save/load systems.
 
-Welcome to Cookie Clicker — a simple and addictive Java-based game built using Apache NetBeans!  
-Click the cookie, earn points, and unlock upgrades. Perfect for learning Java GUI development and event handling.
+🎮 Features
+🍪 Click-Based Gameplay
+Click the cookie to earn cookies
 
-## 🎮 Features
+Click value increases through upgrades
 
-- 🍪 Click-based gameplay with score tracking
-- 🛠 Upgrade system to boost cookie production
-- 💾 Save/load functionality (optional)
-- 🎨 Java Swing GUI with interactive buttons and labels
+Prestige multiplier boosts all cookie gains
 
-## 🧰 Technologies Used
+🛠 Upgrade System
+Cursor: +1 per click
 
-- Java (JDK 8+)
-- Apache NetBeans IDE
-- Java Swing (GUI framework)
+Grandma: +10 per click
 
-## 🚀 Getting Started
+Farm: Multiplies click value
 
-### Prerequisites
+Oven: +100 per click
 
-- Java JDK installed
-- Apache NetBeans IDE (or any Java IDE)
-- Git (for cloning the repo)
+Passive Clicks: +5 cookies/sec
 
-### Clone the Repository
+Upgrade costs scale with prestige
 
-```bash
-git clone https://github.com/antomn13579-star/Cookie-Clicker-Apache-Netbeans.git
+⭐ Prestige System
+Reset your progress to earn Prestige Points
+
+Each point increases your Prestige Multiplier
+
+Upgrade costs scale based on prestige
+
+Prestige requirement increases each time
+
+💾 Save/Load Functionality
+Saves cookies, upgrades, prestige, passive clicks, and more
+
+Uses Java’s Preferences API
+
+🎨 Java Swing GUI
+Interactive buttons
+
+Real-time cookie counter
+
+Passive cookies per second
+
+Upgrade cost labels
+
+Clean and simple layout
+
+🧰 Technologies Used
+Java (JDK 8+)
+
+Apache NetBeans IDE
+
+Java Swing (GUI framework)
+
+Java Preferences API (save/load system)
+
+🚀 Getting Started
+Prerequisites
+Java JDK installed
+
+Apache NetBeans IDE (or any Java IDE)
+
+Git (optional, for cloning the repo)
+
+Clone the Repository
+bash
+git clone https://github.com/antonm13579-star/Cookie-Clicker-Apache-Netbeans.git
+📂 Project Structure
+Code
 Cookie Clicker/
 ├── src/
 │   └── NewJFrame.java         # Main game logic and GUI
+│   └── Prestige.java          # Prestige system logic
 ├── dist/
 │   └── README.TXT             # Build notes
 ├── build/

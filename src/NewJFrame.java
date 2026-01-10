@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import java.util.prefs.Preferences;
 /**
  *
  * @author mike4
@@ -16,6 +16,12 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
+        new javax.swing.Timer(1000, e -> {
+    clickcount += passiveclicks * prestige.prestigemultiplier;
+    CookieHolder.setText("Cookies: " + formatNumber(clickcount));
+    jLabel8.setText("Passive Cookies/sec: " + formatNumber(passiveclicks));
+}).start();
+
     }
     long clickcount = 0;
     long clickvalue = 1;
@@ -24,6 +30,8 @@ public class NewJFrame extends javax.swing.JFrame {
     long upgradecost3 = 10000;
     boolean upgrade3purchased = false;
     long upgradecost4 = 2500;
+    long upgradecost5 = 5000;
+    long passiveclicks = 0;
     
     Prestige prestige = new Prestige();
     /**
@@ -55,6 +63,12 @@ public class NewJFrame extends javax.swing.JFrame {
         Prestigemultiplier = new javax.swing.JLabel();
         Prestigerequirement = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        SAVE = new javax.swing.JButton();
+        LOAD = new javax.swing.JButton();
+        passiveclicks1 = new javax.swing.JButton();
+        Upgradecost5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -80,6 +94,7 @@ public class NewJFrame extends javax.swing.JFrame {
         Upgradecost.setText("Upgrade Cost: 10");
         Upgradecost.addPropertyChangeListener(this::UpgradecostPropertyChange);
 
+        ClickValue.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ClickValue.setText("Click Value: 1");
 
         jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\mike4\\OneDrive\\Pictures\\Screenshots 1\\Screenshot 2026-01-08 165341.png")); // NOI18N
@@ -96,7 +111,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel4.setText("farm Increases click value by 1.5x");
 
-        Upgradecost4.setText("Upgrade Cost: 2,500");
+        Upgradecost4.setText("Upgrade Cost: 2.5K");
 
         Upgrade4.setIcon(new javax.swing.ImageIcon("C:\\Users\\mike4\\OneDrive\\Pictures\\Screenshots 1\\Screenshot 2026-01-08 170333.png")); // NOI18N
         Upgrade4.setBorderPainted(false);
@@ -117,122 +132,170 @@ public class NewJFrame extends javax.swing.JFrame {
 
         Prestigerequirement.setText("Prestige Requirement: 1.0M");
 
+        SAVE.setText("SAVE");
+        SAVE.addActionListener(this::SAVEActionPerformed);
+
+        LOAD.setText("LOAD");
+        LOAD.addActionListener(this::LOADActionPerformed);
+
+        passiveclicks1.setText("Passive Clicks");
+        passiveclicks1.addActionListener(this::passiveclicks1ActionPerformed);
+
+        Upgradecost5.setText("Upgrade Cost: 5k");
+
+        jLabel7.setText("Increases passive clicks by 5/Sec");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Passive Cookies/sec:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 283, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Upgradecost4)
-                                    .addComponent(Upgradecost3))
-                                .addGap(39, 39, 39))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Prestigerequirement)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton3)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Prestigemultiplier)
-                                            .addComponent(Prestigelabel))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Upgrade3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Upgrade4)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Cookie)
-                                .addGap(33, 33, 33))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SAVE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ClickValue)
-                                .addGap(144, 144, 144))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(CookieHolder)
-                                .addGap(159, 159, 159)))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3)
+                                    .addComponent(Prestigerequirement)
+                                    .addComponent(Prestigemultiplier)
+                                    .addComponent(Prestigelabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Cookie)
+                                    .addComponent(ClickValue)
+                                    .addComponent(jLabel8))
+                                .addGap(222, 222, 222)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Upgradecost2)
-                            .addComponent(Upgradecost))
-                        .addGap(44, 44, 44)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(LOAD)
+                                .addGap(116, 116, 116))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(Upgradecost3)
+                                            .addComponent(Upgradecost2)
+                                            .addComponent(Upgradecost))
+                                        .addGap(18, 18, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(Upgrade3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(Upgradecost4)
+                                            .addComponent(Upgradecost5))
+                                        .addGap(28, 28, 28)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(Upgrade4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(passiveclicks1, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addGap(7, 7, 7))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1)))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5)))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(353, 353, 353)
+                .addComponent(CookieHolder)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(180, 180, 180)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Upgradecost)
-                            .addComponent(ClickValue)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ClickValue)
+                        .addGap(18, 18, 18)
                         .addComponent(Cookie, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addComponent(jLabel1)
-                        .addGap(49, 49, 49)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 6, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(Upgradecost)
+                                .addGap(76, 76, 76)
                                 .addComponent(Upgradecost2)
-                                .addGap(74, 74, 74))
+                                .addGap(86, 86, 86)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(Upgrade3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(Upgrade4))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(Upgradecost3)
+                                        .addGap(116, 116, 116)
+                                        .addComponent(Upgradecost4)
+                                        .addGap(50, 50, 50))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(49, 49, 49)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jButton1)
+                                .addGap(31, 31, 31)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(262, 262, 262))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Upgradecost3)
-                                .addGap(82, 82, 82)
-                                .addComponent(Upgradecost4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(CookieHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel1)
+                                .addGap(87, 87, 87)
+                                .addComponent(jLabel2)
+                                .addGap(114, 114, 114)
+                                .addComponent(jLabel4)
+                                .addGap(111, 111, 111)
+                                .addComponent(jLabel5))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
-                                .addComponent(jLabel5)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Prestigerequirement))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Upgrade3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Upgrade4)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Prestigemultiplier)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Prestigelabel)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                                .addGap(150, 150, 150)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Prestigerequirement)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(Prestigemultiplier)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Prestigelabel)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CookieHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passiveclicks1)
+                    .addComponent(Upgradecost5)
+                    .addComponent(jLabel7))
+                .addGap(78, 78, 78)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SAVE)
+                    .addComponent(LOAD))
+                .addGap(40, 40, 40))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+    Preferences save = Preferences.userRoot().node("CookieClickerSave");
     public String formatNumber(long num) {
     if (num >= 1_000_000_000) {
         return String.format("%.1fB", num / 1_000_000_000.0);
@@ -247,7 +310,31 @@ public class NewJFrame extends javax.swing.JFrame {
     public double getUpgrade3Potential(long cookies) {
     return 1 + Math.log10(cookies + 1);
 }
-
+    public void savegame() {
+        save.putLong("Cookies", clickcount);
+        save.putLong("Click Value", clickvalue);
+        save.putLong("Prestige", prestige.prestigepoints);
+        save.putLong("Prestige Requirement", prestige.prestigerequirement);
+        save.putDouble("Prestige Multiplier", prestige.prestigemultiplier);
+        save.putLong("Passive Clicks", passiveclicks);
+        save.putLong("Upgrade Cost", upgradecost5);
+    }
+    public void loadgame() {
+        clickcount = save.getLong("Cookies", 0);
+        clickvalue = save.getLong("Click Value", 1);
+        prestige.prestigepoints = save.getLong("Prestige", 0);
+        prestige.prestigerequirement = save.getLong("Prestige Requirement", 1_000_000);
+        prestige.prestigemultiplier = save.getDouble("Prestige Multiplier", 1.0);
+        passiveclicks = save.getLong("Passive Clicks", 0);
+        upgradecost5 = save.getLong("Upgrade Cost", 5000);
+        
+        jLabel8.setText("Passive Cookies/sec " + formatNumber(passiveclicks));
+        CookieHolder.setText("Cookies: " + formatNumber(clickcount)); 
+        ClickValue.setText("Click Value: " + formatNumber(clickvalue)); 
+        Prestigelabel.setText("Prestige: " + formatNumber(prestige.prestigepoints)); 
+        Prestigemultiplier.setText("Multiplier: " + prestige.prestigemultiplier); 
+        Prestigerequirement.setText("Prestige Requirement: " + formatNumber(prestige.prestigerequirement));
+    }
     private void CookieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CookieActionPerformed
         // TODO add your handling code here:
     clickcount += (int)(clickvalue*prestige.prestigemultiplier);
@@ -314,25 +401,51 @@ public class NewJFrame extends javax.swing.JFrame {
         if (prestige.canPrestige(clickcount)) {
             prestige.applyPrestige();           
             
+            double scale = 1 + (prestige.prestigepoints * 0.25); 
             clickcount = 0; 
             clickvalue = 1;
-            upgradecost = 10;
-            Upgradecost.setText("Upgrade Cost: " + upgradecost);
-            upgradecost2 = 125;
-            Upgradecost2.setText("Upgrade Cost: " + upgradecost2);
-            upgradecost3 = 10000;
-            Upgradecost3.setText("Upgrade Cost: " + upgradecost3);
-            upgradecost4 = 2500;
-            Upgradecost4.setText("Upgrade Cost: " + upgradecost4);
             upgrade3purchased = false;
+            passiveclicks = 0;
+            
+            upgradecost = (long)(10 * scale); 
+            upgradecost2 = (long)(125 * scale); 
+            upgradecost3 = (long)(10000 * scale); 
+            upgradecost4 = (long)(2500 * scale); 
+            upgradecost5 = (long)(5000 * scale);
+            
+            Upgradecost.setText("Upgrade Cost: " + formatNumber(upgradecost));
+            Upgradecost2.setText("Upgrade Cost: " + formatNumber(upgradecost2));
+            Upgradecost3.setText("Upgrade Cost: 10K"); 
+            Upgradecost4.setText("Upgrade Cost: " + formatNumber(upgradecost4));
+            Upgradecost5.setText("Upgrade Cost: " + formatNumber(upgradecost5));
            
             Prestigerequirement.setText("Prestige Cost: " + formatNumber(prestige.prestigerequirement));
             CookieHolder.setText("Cookies: " + clickcount);
             Prestigelabel.setText("Prestige: " + formatNumber(prestige.prestigepoints));
             Prestigemultiplier.setText("Multiplier: x" + prestige.prestigemultiplier);
+            jLabel8.setText("Passive Cookies/sec: 0"); 
             
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SAVEActionPerformed
+        savegame();
+    }//GEN-LAST:event_SAVEActionPerformed
+
+    private void LOADActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOADActionPerformed
+        loadgame();
+    }//GEN-LAST:event_LOADActionPerformed
+
+    private void passiveclicks1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passiveclicks1ActionPerformed
+        if (clickcount >= upgradecost5) {
+            clickcount -= upgradecost5;
+            passiveclicks += 5; 
+            upgradecost5 *= 1.15;
+            
+            jLabel8.setText("Passive Cookies/sec: " + formatNumber(passiveclicks));
+            Upgradecost5.setText("Upgrade Cost: " + formatNumber(upgradecost5));
+        }
+    }//GEN-LAST:event_passiveclicks1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,15 +476,18 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ClickValue;
     private javax.swing.JButton Cookie;
     private javax.swing.JLabel CookieHolder;
+    private javax.swing.JButton LOAD;
     private javax.swing.JLabel Prestigelabel;
     private javax.swing.JLabel Prestigemultiplier;
     private javax.swing.JLabel Prestigerequirement;
+    private javax.swing.JButton SAVE;
     private javax.swing.JButton Upgrade3;
     private javax.swing.JButton Upgrade4;
     private javax.swing.JLabel Upgradecost;
     private javax.swing.JLabel Upgradecost2;
     private javax.swing.JLabel Upgradecost3;
     private javax.swing.JLabel Upgradecost4;
+    private javax.swing.JLabel Upgradecost5;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -380,5 +496,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JButton passiveclicks1;
     // End of variables declaration//GEN-END:variables
 }
